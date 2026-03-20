@@ -1,0 +1,36 @@
+{
+  "name": "techkraft",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "create-migration": "node-pg-migrate -j ts",
+    "migrate": "dotenv -e .env -- node-pg-migrate up",
+    "migrate:down": "dotenv -e .env -- node-pg-migrate down",
+    "setup": "bash scripts/setup.sh",
+    "seed": "ts-node scripts/seed.ts",
+    "dev": "nodemon src/server.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.6.4",
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/pg": "^8.18.0",
+    "dotenv-cli": "^11.0.0",
+    "node-pg-migrate": "^8.0.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3",
+    "pino": "^10.3.1"
+  },
+  "dependencies": {
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "nodemon": "^3.1.14",
+    "pg": "^8.20.0",
+    "zod": "^4.3.6",
+    "pino-pretty": "^13.1.3"
+  }
+}

@@ -1,0 +1,79 @@
+[
+    {
+        "id": 1,
+        "title": "Modern 3 BHK Apartment in Thamel",
+        "price": 8500000,
+        "beds": 3,
+        "baths": 2,
+        "property_type": "apartment",
+        "suburb": "Thamel",
+        "internal_notes": "High tourist demand area, good rental yield",
+        "image": "https://picsum.photos/800/600"
+    },
+    {
+        "id": 2,
+        "title": "Family House in Lalitpur Jawalakhel",
+        "price": 15000000,
+        "beds": 4,
+        "baths": 3,
+        "property_type": "house",
+        "suburb": "Jawalakhel",
+        "internal_notes": "Quiet residential area, near schools",
+        "image": "https://picsum.photos/800/600"
+    },
+    {
+        "id": 3,
+        "title": "Budget Flat in New Baneshwor",
+        "price": 6000000,
+        "beds": 2,
+        "baths": 1,
+        "property_type": "apartment",
+        "suburb": "New Baneshwor",
+        "internal_notes": "Good connectivity, high rental demand",
+        "image": "https://picsum.photos/800/600"
+    },
+    {
+        "id": 4,
+        "title": "Luxury Villa in Budhanilkantha",
+        "price": 35000000,
+        "beds": 5,
+        "baths": 5,
+        "property_type": "villa",
+        "suburb": "Budhanilkantha",
+        "internal_notes": "Premium gated community, diplomatic area",
+        "image": "https://picsum.photos/800/600"
+    },
+    {
+        "id": 5,
+        "title": "Land for Sale in Tokha",
+        "price": 12000000,
+        "beds": 0,
+        "baths": 0,
+        "property_type": "land",
+        "suburb": "Tokha",
+        "internal_notes": "Road access available, fast developing area",
+        "image": "https://picsum.photos/800/600"
+    },
+    {
+        "id": 6,
+        "title": "2 BHK Apartment in Koteshwor",
+        "price": 7000000,
+        "beds": 2,
+        "baths": 2,
+        "property_type": "apartment",
+        "suburb": "Koteshwor",
+        "internal_notes": "Near ring road, good for small families",
+        "image": "https://picsum.photos/800/600"
+    },
+    {
+        "id": 7,
+        "title": "Traditional House in Bhaktapur Durbar Area",
+        "price": 18000000,
+        "beds": 3,
+        "baths": 2,
+        "property_type": "house",
+        "suburb": "Bhaktapur Durbar Square",
+        "internal_notes": "Heritage zone, potential for homestay business",
+        "image": "https://picsum.photos/800/600"
+    }
+]
