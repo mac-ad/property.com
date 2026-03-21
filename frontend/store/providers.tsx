@@ -8,7 +8,7 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
         <GlobalProvider>
             <ThemeProvider
                 attribute="class"
-                defaultTheme="system"
+                defaultTheme="dark"
                 enableSystem
                 disableTransitionOnChange
                 storageKey="theme"

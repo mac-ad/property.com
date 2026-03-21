@@ -16,7 +16,7 @@ const Header = async () => {
 
                 <div className="flex items-center gap-2">
                     <ToggleViewButton email={email || ''} />
-                    <ThemeToggle />
+                    {/* <ThemeToggle /> */}
                 </div>
             </div>
         </div>
