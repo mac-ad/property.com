@@ -10,7 +10,7 @@ export const checkAuth = async (req: Request, res: Response, next: NextFunction)
         req.user = {
             is_admin: false,
         }
-        next();
+        return next();
     }
 
     const agent = await getAgentByEmail(email);

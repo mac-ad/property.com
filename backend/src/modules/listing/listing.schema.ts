@@ -13,6 +13,7 @@ export const listingQuerySchema = z.object({
     offset: z.coerce.number().default(0),
     sort: z.enum(['newest', 'oldest', 'price_asc', 'price_desc']).default('newest'),
 }).superRefine((data, ctx) => {
+          
     if (data.min_price && data.max_price && data.min_price > data.max_price) {
         ctx.addIssue({
             code: z.ZodIssueCode.custom,

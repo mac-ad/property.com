@@ -53,9 +53,13 @@ export const getListings = async (req: TypedRequest<ListingQuery>): Promise<{ da
     };
 }
 
-export const getListingBySlugOrId = async (identifier: string): Promise<Listing> => {
+export const getListingBySlugOrId = async (identifier: string, is_admin: boolean): Promise<Listing> => {
 
-    let q = `SELECT * FROM properties`
+    const defaultSelect = is_admin
+        ? "*" :
+        "id, title, price, beds, baths, property_type, suburb, created_at, slug, image";
+
+    let q = `SELECT ${defaultSelect} FROM properties`
 
     let parsedIdentifier: string | number = identifier;
 
@@ -136,3 +140,14 @@ const buildWhere = (query: ListingQuery) => {
     };
 }
 
+
+
+export const getSuburbs = async (): Promise<string[]> => {
+    const result = await pool.query("SELECT DISTINCT suburb FROM properties");
+    return result.rows.map((row: { suburb: string }) => row.suburb);
+}
+
+export const getPropertyTypes = async (): Promise<string[]> => {
+    const result = await pool.query("SELECT DISTINCT property_type FROM properties");
+    return result.rows.map((row: { property_type: string }) => row.property_type);
+}

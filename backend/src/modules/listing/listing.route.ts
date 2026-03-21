@@ -6,6 +6,9 @@ import * as listingController from './listing.controller';
 
 const router = Router();
 
+router.get("/suburbs", listingController.getSuburbs)
+router.get("/property-types", listingController.getPropertyTypes)
+
 router.get(
     "/",
     checkAuth,
