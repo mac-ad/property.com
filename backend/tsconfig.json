@@ -1,8 +1,6 @@
 {
     "compilerOptions": {
         "resolveJsonModule": true,
-        "esModuleInterop": true,
-        "module": "node16",
-        "moduleResolution": "node16"
+        "esModuleInterop": true
     }
 }
