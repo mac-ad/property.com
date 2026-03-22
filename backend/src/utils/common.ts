@@ -8,5 +8,5 @@ export const slugify = (text: string) => {
 
 
 export const isNumeric = (value: string) => {
-    return !isNaN(Number(value));
+    return value.trim() !== '' && !isNaN(Number(value));
 }

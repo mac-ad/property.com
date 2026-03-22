@@ -16,7 +16,7 @@ export const checkAuth = async (req: Request, res: Response, next: NextFunction)
     const agent = await getAgentByEmail(email);
 
     req.user = {
-        is_admin: agent && agent?.role === 'admin',
+        is_admin: !agent ? false : agent && agent?.role === 'admin',
     }
 
     next();

@@ -45,7 +45,7 @@ export const getListings = async (req: TypedRequest<ListingQuery>): Promise<{ da
     let countQuery = `SELECT COUNT(*) FROM properties ${whereSQL}`;
 
     const countResult = await pool.query(countQuery, values);
-    const total = countResult.rows[0].count;
+    const total = Number(countResult.rows[0].count);
 
     return {
         data: result.rows as Listing[],

@@ -4,13 +4,17 @@ import { logger } from '../utils/logger';
 
 dotenv.config();
 
-if (!process.env.DATABASE_URL) {
+const getDatabaseUrl = () => {
+    return process.env.NODE_ENV === 'test' ? process.env.TEST_DATABASE_URL : process.env.DATABASE_URL
+}
+
+if (!getDatabaseUrl()) {
     logger.error('DATABASE_URL is not set');
     process.exit(1);
 }
 
 export const pool = new Pool({
-    connectionString: process.env.DATABASE_URL
+    connectionString: getDatabaseUrl()
 })
 
 export const connectDB = async () => {
