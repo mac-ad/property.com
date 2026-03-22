@@ -39,7 +39,7 @@ const ListingsPage = async ({ searchParams }: Props) => {
         offset: num("offset") || 0,
     };
 
-    const { data: listings, metaData } = await fetchListings(query, email);
+    const { data: listings, metaData, error } = await fetchListings(query, email);
 
     return (
         <div className="max-w-7xl mx-auto py-6 space-y-6">
