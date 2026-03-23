@@ -6,7 +6,7 @@ import { slugify } from '../src/utils/common';
 import { logger } from '../src/utils/logger';
 
 
-const seed = async () => {
+export const seed = async (endPool: boolean = true) => {
 
     try {
         // drop all database data to reseed
@@ -77,8 +77,12 @@ const seed = async () => {
         logger.error(error);
         throw error;
     } finally {
-        await pool.end();
+        if (endPool) {
+            await pool.end();
+        }
     }
 }
 
-seed();
+if (require.main === module) {
+    seed();
+}

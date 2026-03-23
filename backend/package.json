@@ -10,11 +10,11 @@
     "setup": "bash scripts/setup.sh",
     "seed": "ts-node scripts/seed.ts",
     "dev": "nodemon src/server.ts",
-    "test": "jest",
+    "test": "jest --runInBand",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "test:unit": "jest --testPathPatterns=test/unit",
-    "test:integration": "jest --testPathPatterns=test/integration",
+    "test:integration": "NODE_ENV=test jest --testPathPatterns=test/integration",
     "test:db": "jest --testPathPatterns=test/db",
     "test:listing": "jest --testPathPatterns=test/unit/service/listing.service.test.ts"
   },

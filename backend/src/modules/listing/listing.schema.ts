@@ -8,7 +8,6 @@ export const listingQuerySchema = z.object({
     beds: z.coerce.number().optional(),
     baths: z.coerce.number().optional(),
     property_type: z.string().optional(),
-    keyword: z.string().optional(),
     limit: z.coerce.number().default(10),
     offset: z.coerce.number().default(0),
     sort: z.enum(['newest', 'oldest', 'price_asc', 'price_desc']).default('newest'),

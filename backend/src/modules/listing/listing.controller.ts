@@ -33,14 +33,22 @@ export const getListings = async (
 export const getListingBySlugOrId = async (
     req: Request,
     res: Response
-): Promise<void> => {
+): Promise<Response> => {
     try {
         const identifier = req.params.identifier as string;
 
         const listing = await listingService.getListingBySlugOrId(identifier, req?.user?.is_admin);
 
+
+        if (!listing) {
+            return res.status(404).json({
+                message: 'Listing not found',
+                data: null,
+            });
+        }
+
         res.status(200).json({
-            message: listing ? 'Listing fetched successfully' : 'Listing not found',
+            message: 'Listing fetched successfully',
             data: listing,
         });
     } catch (error) {

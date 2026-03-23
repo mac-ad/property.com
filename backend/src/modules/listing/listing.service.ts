@@ -22,7 +22,7 @@ export const getListings = async (req: TypedRequest<ListingQuery>): Promise<{ da
 
     const defaultSelect = is_admin
         ? "*" :
-        "id, title, price, beds, baths, property_type, suburb, created_at, slug, image";
+        "id, title, price, beds, baths, property_type, suburb, created_at, slug, image, agent_id";
 
     let q = `SELECT ${defaultSelect} FROM properties ${whereSQL}`;
 
@@ -85,7 +85,6 @@ const buildWhere = (query: ListingQuery) => {
         beds,
         baths,
         property_type,
-        keyword,
     } = query;
 
 
@@ -127,11 +126,6 @@ const buildWhere = (query: ListingQuery) => {
     if (property_type) {
         conditions.push(`property_type = $${i++}`);
         values.push(property_type);
-    }
-
-    if (keyword) {
-        conditions.push(`title ILIKE $${i++}`);
-        values.push(`%${keyword}%`);
     }
 
     return {

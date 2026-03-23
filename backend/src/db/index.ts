@@ -2,7 +2,9 @@ import { Pool } from 'pg';
 import dotenv from 'dotenv';
 import { logger } from '../utils/logger';
 
-dotenv.config();
+dotenv.config({
+    quiet: true
+});
 
 const getDatabaseUrl = () => {
     return process.env.NODE_ENV === 'test' ? process.env.TEST_DATABASE_URL : process.env.DATABASE_URL
