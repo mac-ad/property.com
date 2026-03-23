@@ -1,4 +1,4 @@
-# TechKraft
+# Property.com
 
 A full-stack property listing platform with a Next.js frontend and Express API backend.
 
@@ -39,8 +39,8 @@ cd techkraft
 Connect to your PostgreSQL instance and create two databases:
 
 ```sql
-CREATE DATABASE techkraft;
-CREATE DATABASE techkraft_test;
+CREATE DATABASE main_db;
+CREATE DATABASE test_db;
 ```
 
 ### 3. Set up the Backend
@@ -53,8 +53,9 @@ pnpm install
 Create a `.env` file in the `backend/` directory:
 
 ```env
-DATABASE_URL=postgresql://<user>:<password>@localhost:5432/techkraft
-TEST_DATABASE_URL=postgresql://<user>:<password>@localhost:5432/techkraft_test
+#assuming the postgres is running on port 5432
+DATABASE_URL=postgresql://<user>:<password>@localhost:5432/main_db
+TEST_DATABASE_URL=postgresql://<user>:<password>@localhost:5432/test_db
 NODE_ENV=development
 ```
 
