@@ -93,7 +93,7 @@ export const fetchListings = async (
 export const fetchSuburbs = async () => {
     try {
         const response = await fetch(`${BASE_URL}/listings/suburbs`, {
-            cache: "force-cache",
+            cache: "no-store",
         });
         if (!response.ok) return [];
         const data = await response.json();
@@ -107,8 +107,8 @@ export const fetchSuburbs = async () => {
 export const fetchPropertyTypes = async () => {
     try {
         const response = await fetch(`${BASE_URL}/listings/property-types`, {
-            cache: "force-cache",
-          });
+            cache: "no-store",
+        });
         if (!response.ok) return [];
         const data = await response.json();
         return data?.data ?? [];
