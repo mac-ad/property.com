@@ -38,8 +38,6 @@ var corsOptions = {
 
 app.use(cors(corsOptions));
 
-console.log('corsOrigins', corsOrigins);
-
 
 app.get('/health', (_req, res) => {
     res.status(200).json({ status: 'ok' });
