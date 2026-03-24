@@ -1,4 +1,4 @@
-import { ListingsQuery, ListingsResponse, Listing, ListingsMetaData } from "../types/listings";
+import { ListingsQuery, Listing, ListingsMetaData } from "../types/listings";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -87,3 +87,34 @@ export const fetchListings = async (
         }
     }
 };
+
+
+
+export const fetchSuburbs = async () => {
+    try {
+        const response = await fetch(`${BASE_URL}/listings/suburbs`, {
+            cache: "force-cache",
+        });
+        if (!response.ok) return [];
+        const data = await response.json();
+        return data?.data ?? [];
+    } catch (error) {
+        console.error(error);
+        return [];
+    }
+}
+
+export const fetchPropertyTypes = async () => {
+    try {
+        const response = await fetch(`${BASE_URL}/listings/property-types`, {
+            cache: "force-cache",
+          });
+        if (!response.ok) return [];
+        const data = await response.json();
+        return data?.data ?? [];
+    }
+    catch (error) {
+        console.error(error);
+        return [];
+    }
+}

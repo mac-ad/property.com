@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import ListingGrid from "@/components/listing-grid";
 import ListingsToolbar from "@/components/listings-toolbar";
 import ListingsPagination from "@/components/listings-pagination";
-import { fetchListings } from "@/lib/api/listings";
+import { fetchListings, fetchPropertyTypes, fetchSuburbs } from "@/lib/api/listings";
 import { cookies } from "next/headers";
 import { ListingsQuery } from "@/lib/types/listings";
 
@@ -39,7 +39,14 @@ const ListingsPage = async ({ searchParams }: Props) => {
         offset: num("offset") || 0,
     };
 
-    const { data: listings, metaData, error } = await fetchListings(query, email);
+    // Fetch listings, suburbs, and property types in parallel to optimize performance
+    const [listingsResult, suburbs, propertyTypes] = await Promise.all([
+        fetchListings(query, email),
+        fetchSuburbs(),
+        fetchPropertyTypes()
+    ]);
+    const { data: listings, metaData, error } = listingsResult;
+
 
     return (
         <div className="max-w-7xl mx-auto py-6 space-y-6">
@@ -48,7 +55,10 @@ const ListingsPage = async ({ searchParams }: Props) => {
                     <div className="h-[52px] animate-pulse rounded-lg bg-muted" />
                 }
             >
-                <ListingsToolbar />
+                <ListingsToolbar
+                    suburbs={suburbs}
+                    propertyTypes={propertyTypes}
+                />
             </Suspense>
 
             <p className="text-sm text-muted-foreground">

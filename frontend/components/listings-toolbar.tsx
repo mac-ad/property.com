@@ -44,7 +44,13 @@ function filtersFromParams(params: URLSearchParams): Filters {
     };
 }
 
-export default function ListingsToolbar() {
+export default function ListingsToolbar({
+    suburbs,
+    propertyTypes
+}: {
+    suburbs: string[],
+    propertyTypes: string[]
+}) {
     const router = useRouter();
     const searchParams = useSearchParams();
 
@@ -52,7 +58,7 @@ export default function ListingsToolbar() {
         filtersFromParams(searchParams)
     );
 
-    const { suburbs, propertyTypes } = useGlobalContext();
+    // const { suburbs, propertyTypes } = useGlobalContext();
 
     const suburbOptions = useMemo(() => suburbs.map((suburb) => ({ label: suburb.toUpperCase(), value: suburb })), [suburbs]);
 
