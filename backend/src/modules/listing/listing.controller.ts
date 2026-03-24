@@ -1,50 +1,51 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import * as listingService from './listing.service';
 import { ListingQuery } from "./listing.schema";
 import { TypedRequest } from "../../types/common";
-import { isNumeric } from "../../utils/common";
 import { logger } from "../../utils/logger";
 
 export const getListings = async (
-    req: TypedRequest<ListingQuery>,
-    res: Response
+    req: Request,
+    res: Response,
+    next: NextFunction
 ): Promise<void> => {
     try {
-        const { data = [], total } = await listingService.getListings(req);
+        const { parsedQuery, user } = (req as TypedRequest<ListingQuery>);
+
+        const { data = [], total } = await listingService.getListings(parsedQuery, user?.is_admin ?? false);
 
         res.status(200).json({
             message: 'Listings fetched successfully',
             metaData: {
                 total,
-                offset: req.parsedQuery.offset,
-                limit: req.parsedQuery.limit,
+                offset: parsedQuery.offset,
+                limit: parsedQuery.limit,
             },
             data,
-
         });
     } catch (error) {
         logger.error(error);
-        res.status(500).json({
-            message: 'Internal server error',
-        });
+        next(error);
     }
 }
 
 export const getListingBySlugOrId = async (
     req: Request,
-    res: Response
-): Promise<Response> => {
+    res: Response,
+    next: NextFunction
+): Promise<void> => {
     try {
         const identifier = req.params.identifier as string;
+        const { user } = (req as TypedRequest<ListingQuery>);
 
-        const listing = await listingService.getListingBySlugOrId(identifier, req?.user?.is_admin);
-
+        const listing = await listingService.getListingBySlugOrId(identifier, user?.is_admin ?? false);
 
         if (!listing) {
-            return res.status(404).json({
+            res.status(404).json({
                 message: 'Listing not found',
                 data: null,
             });
+            return;
         }
 
         res.status(200).json({
@@ -53,15 +54,14 @@ export const getListingBySlugOrId = async (
         });
     } catch (error) {
         logger.error(error);
-        res.status(500).json({
-            message: 'Internal server error',
-        });
+        next(error);
     }
 }
 
 export const getSuburbs = async (
     req: Request,
-    res: Response
+    res: Response,
+    next: NextFunction
 ): Promise<void> => {
     try {
         const suburbs = await listingService.getSuburbs();
@@ -72,15 +72,14 @@ export const getSuburbs = async (
         });
     } catch (error) {
         logger.error(error);
-        res.status(500).json({
-            message: 'Internal server error',
-        });
+        next(error);
     }
 }
 
 export const getPropertyTypes = async (
     req: Request,
-    res: Response
+    res: Response,
+    next: NextFunction
 ): Promise<void> => {
     try {
         const propertyTypes = await listingService.getPropertyTypes();
@@ -91,8 +90,6 @@ export const getPropertyTypes = async (
     }
     catch (error) {
         logger.error(error);
-        res.status(500).json({
-            message: 'Internal server error',
-        });
+        next(error);
     }
 }

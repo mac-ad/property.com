@@ -16,15 +16,22 @@ if (!getDatabaseUrl()) {
 }
 
 export const pool = new Pool({
-    connectionString: getDatabaseUrl()
+    connectionString: getDatabaseUrl(),
+    max: Number(process.env.PG_POOL_MAX) || 20,
+    idleTimeoutMillis: 30_000,
+    connectionTimeoutMillis: 10_000,
+
+    ssl: process.env.DATABASE_SSL === 'true'
+        ? { rejectUnauthorized: process.env.DATABASE_SSL_REJECT_UNAUTHORIZED !== 'false' }
+        : undefined,
 })
 
 export const connectDB = async () => {
     try {
         await pool.query('SELECT 1')
-        logger.info("DB Connected Successfully! 🚀")
+        logger.info("DB Connected Successfully!")
     } catch (error) {
-        logger.error("DB Connection Error! 🚨");
+        logger.error("DB Connection Error!");
         logger.error(error);
         throw error;
     }

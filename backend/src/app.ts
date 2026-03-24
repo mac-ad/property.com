@@ -1,6 +1,9 @@
 import express from 'express';
 import { listingRouter } from './modules/listing/listing.route';
 import cors from 'cors';
+import { logger } from './utils/logger';
+import helmet from 'helmet';
+import errorMiddleware from './middlewares/error.middleware';
 
 const app = express();
 
@@ -14,18 +17,39 @@ declare global {
     }
 }
 
-var corsOptions = {
-    origin: 'http://localhost:3000',
-    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+
+const rawOrigins = process.env.CORS_ORIGIN?.split(',').map((origin) => origin.trim()).filter(Boolean);
+
+const corsOrigins = rawOrigins && rawOrigins.length > 0 ? rawOrigins : false;
+
+if (!rawOrigins?.length && process.env.NODE_ENV === 'production') {
+    logger.warn('CORS_ORIGIN is unset — browsers will be blocked by CORS (origin: false)');
 }
 
-app.use(express.json());
+
+app.use(helmet());
+app.use(express.json({ limit: '1mb' }));
+
+var corsOptions = {
+    origin: corsOrigins,
+    optionsSuccessStatus: 200,
+    credentials: true,
+}
+
 app.use(cors(corsOptions));
 
-app.get("/test", (req, res) => {
-    res.send("Hello World");
+console.log('corsOrigins', corsOrigins);
+
+
+app.get('/health', (_req, res) => {
+    res.status(200).json({ status: 'ok' });
 });
 
 app.use("/listings", listingRouter)
+
+
+app.use(errorMiddleware)
+
+
 
 export default app;

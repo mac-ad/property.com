@@ -24,6 +24,11 @@ const mockRes = () => {
     return res;
 };
 
+const mockNext = () => {
+    const next = jest.fn();
+    return next;
+}
+
 
 beforeEach(() => {
     jest.clearAllMocks();
@@ -35,11 +40,16 @@ describe('listing.controller - getSuburbs error handling', () => {
         (listingService.getSuburbs as jest.Mock).mockRejectedValue(new Error('DB error'));
         const req = {} as Request;
         const res = mockRes();
-        await listingController.getSuburbs(req, res);
-        expect(res.status).toHaveBeenCalledWith(500);
-        expect(res.json).toHaveBeenCalledWith({
-            message: 'Internal server error',
-        });
+        const next = mockNext();
+
+        await listingController.getSuburbs(req, res, next);
+        // expect(res.status).toHaveBeenCalledWith(500);
+        // expect(res.json).toHaveBeenCalledWith({
+        //     message: 'Internal server error',
+        // });
+        expect(next).toHaveBeenCalledTimes(1);
+        expect(next).toHaveBeenCalledWith(new Error('DB error'))
+        expect(res.status).not.toHaveBeenCalled();
     });
 });
 
@@ -49,9 +59,14 @@ describe('listing.controller - getPropertyTypes error handling', () => {
         (listingService.getPropertyTypes as jest.Mock).mockRejectedValue(new Error('DB error'));
         const req = {} as Request;
         const res = mockRes();
-        await listingController.getPropertyTypes(req, res);
-        expect(res.status).toHaveBeenCalledWith(500);
-        expect(res.json).toHaveBeenCalledWith({ message: 'Internal server error' });
+        const next = mockNext();
+
+        await listingController.getPropertyTypes(req, res, next);
+        // expect(res.status).toHaveBeenCalledWith(500);
+        // expect(res.json).toHaveBeenCalledWith({ message: 'Internal server error' });
+        expect(next).toHaveBeenCalledTimes(1);
+        expect(next).toHaveBeenCalledWith(new Error('DB error'))
+        expect(res.status).not.toHaveBeenCalled();
     });
 });
 
@@ -61,9 +76,13 @@ describe('listing.controller - getListingBySlugOrId error handling', () => {
         (listingService.getListingBySlugOrId as jest.Mock).mockRejectedValue(new Error('DB error'));
         const req = { params: { identifier: 'test-slug' }, user: { is_admin: false } } as any;
         const res = mockRes();
-        await listingController.getListingBySlugOrId(req, res);
-        expect(res.status).toHaveBeenCalledWith(500);
-        expect(res.json).toHaveBeenCalledWith({ message: 'Internal server error' });
+        const next = mockNext();
+        await listingController.getListingBySlugOrId(req, res, next);
+        // expect(res.status).toHaveBeenCalledWith(500);
+        // expect(res.json).toHaveBeenCalledWith({ message: 'Internal server error' });
+        expect(next).toHaveBeenCalledTimes(1);
+        expect(next).toHaveBeenCalledWith(new Error('DB error'))
+        expect(res.status).not.toHaveBeenCalled();
     });
 });
 
@@ -76,8 +95,12 @@ describe('listing.controller - getListings error handling', () => {
             user: { is_admin: false }
         } as any;
         const res = mockRes();
-        await listingController.getListings(req, res);
-        expect(res.status).toHaveBeenCalledWith(500);
-        expect(res.json).toHaveBeenCalledWith({ message: 'Internal server error' });
+        const next = mockNext();
+        await listingController.getListings(req, res, next);
+        // expect(res.status).toHaveBeenCalledWith(500);
+        // expect(res.json).toHaveBeenCalledWith({ message: 'Internal server error' });
+        expect(next).toHaveBeenCalledTimes(1);
+        expect(next).toHaveBeenCalledWith(new Error('DB error'))
+        expect(res.status).not.toHaveBeenCalled();
     });
 });

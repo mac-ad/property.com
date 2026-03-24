@@ -161,7 +161,10 @@ describe('listing.service - getListings', () => {
 
     it('should return data and total count', async () => {
         setupMocks();
-        const result = await listingService.getListings(buildReq());
+
+        const { parsedQuery, user } = buildReq();
+
+        const result = await listingService.getListings(parsedQuery, user?.is_admin ?? false);
 
         expect(result.data).toEqual(mockRows)
         expect(result.total).toBe(mockRows.length)
@@ -169,9 +172,11 @@ describe('listing.service - getListings', () => {
 
     it('should execute a * data query and a count query for is_admin true user', async () => {
         setupMocks();
-        await listingService.getListings(buildReq({
+        const { parsedQuery, user } = buildReq({
             is_admin: true,
-        }));
+        });
+
+        await listingService.getListings(parsedQuery, user?.is_admin ?? false);
 
         expect(mockQuery).toHaveBeenCalledTimes(2);
         expect(mockQuery).toHaveBeenNthCalledWith(1, expect.stringContaining('SELECT * FROM properties'), expect.anything());

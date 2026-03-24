@@ -4,16 +4,14 @@ import { isNumeric } from "../../utils/common";
 import { ListingQuery } from "./listing.schema";
 import { Listing } from "./listing.types";
 
-export const getListings = async (req: TypedRequest<ListingQuery>): Promise<{ data: Listing[], total: number }> => {
+export const getListings = async (query: ListingQuery, is_admin: boolean): Promise<{ data: Listing[], total: number }> => {
     const {
         limit,
         offset,
         sort,
-    } = req.parsedQuery;
+    } = query;
 
-    const { is_admin } = req.user;
-
-    const { conditions, values } = buildWhere(req.parsedQuery);
+    const { conditions, values } = buildWhere(query);
 
     let whereSQL = "";
     if (conditions.length > 0) {
