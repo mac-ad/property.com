@@ -5,7 +5,7 @@ A full-stack property listing platform with a Next.js frontend and Express API b
 ## Architecture
 
 ```
-techkraft/
+property.com/
 ├── frontend/   # Next.js 16 — React UI (dev default: port 3002)
 ├── backend/    # Express 5 — REST API (default: port 4001, overridable via PORT)
 ```
